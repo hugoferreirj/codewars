@@ -22,6 +22,8 @@
 #try not to modify the input list of distances ls
 #in some languages this "list" is in fact a string (see the Sample Tests).
 
+#My Solution
+
 from itertools import combinations
 def choose_best_sum(t, k, ls):
     bestSum = -1
