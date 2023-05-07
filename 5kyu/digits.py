@@ -1,4 +1,4 @@
-#Refatorar e tentar otimizar no tempo
+#Falta refatorar e tentar otimizar no tempo
 
 from itertools import permutations
 digits = [j for j in range(10)]
@@ -95,3 +95,24 @@ def guess(matches):
             return nextSeq
     testedV.append(perms[0])
     return perms[0] 
+
+
+#Shorter solution:
+
+#import itertools
+#
+#def guess(n):
+#    if n == -1:
+#        # Start by guessing the first code in the list
+#        guess.remaining_codes = list(itertools.permutations(range(10), 4))
+#        guess.prev_guess = guess.remaining_codes[0]
+#    else:
+#        # Remove any code from the list that would not produce the same number of matches
+#        guess.remaining_codes = [code for code in guess.remaining_codes
+#                                      if sum(a == b for a, b in zip(code, guess.prev_guess)) == n]
+#        # Choose the next code in the list and guess it
+#        guess.prev_guess = guess.remaining_codes[0]
+#    return list(guess.prev_guess)
+#
+#guess.remaining_codes = None
+#guess.prev_guess = None
