@@ -46,10 +46,13 @@ r = ["r", "R"]
 aeiouy = ["a", "e", "i", "o", "u", "y", "A", "E", "Y", "O", "U", "Y"]
 
 def replaceAdjacentSameDigits(word):
-    digits = ["1", "2", "3", "4", "5", "6"]
-    for digit in digits:
-        word = word.replace(digit + digit, digit)
-    return word
+    lastChar = "9999999999"
+    finalWord = ""
+    for char in word:
+        if char != lastChar:
+            finalWord += char
+        lastChar = char
+    return finalWord
 
 def removeAllOcurrences(word, chars):
     for char in chars:
@@ -61,19 +64,34 @@ def replaceAllOcurrences(word, chars, sub):
         word = word.replace(char, sub)
     return word
 
+def addZeros(word):
+    while len(word) < 4:
+        word = word + "0"
+    return word
+
+def replaceLetters(word):
+    word = replaceAllOcurrences(word, bfpv, "1")
+    word = replaceAllOcurrences(word, cgjkqsxz, "2")
+    word = replaceAllOcurrences(word, dt, "3")
+    word = replaceAllOcurrences(word, l, "4")
+    word = replaceAllOcurrences(word, mn, "5")
+    word = replaceAllOcurrences(word, r, "6")
+    return word
+
 def soundex(name):
     words = name.split()
     firstLetters = [l[0] for l in words] #save first Letters
-    words = [w[1:] for w in words[:]]
     for i, word in enumerate(words[:]):
         words[i] = removeAllOcurrences(words[i], hw)
-        words[i] = replaceAllOcurrences(words[i], bfpv, "1")
-        words[i] = replaceAllOcurrences(words[i], cgjkqsxz, "2")
-        words[i] = replaceAllOcurrences(words[i], dt, "3")
-        words[i] = replaceAllOcurrences(words[i], l, "4")
-        words[i] = replaceAllOcurrences(words[i], mn, "5")
-        words[i] = replaceAllOcurrences(words[i], r, "6")
+        words[i] = replaceLetters(words[i])
         words[i] = replaceAdjacentSameDigits(words[i])
         words[i] = removeAllOcurrences(words[i], aeiouy)
-        words[i] = firstLetters[i] + words[i]
-    print(words)
+        if firstLetters[i] in hw or firstLetters[i] in aeiouy:
+            words[i] = firstLetters[i] + words[i]
+        else:
+            words[i] = firstLetters[i] + words[i][1:]
+        words[i] = addZeros(words[i])
+        words[i] = words[i][:4].upper()
+    return " ".join(words)
+
+
